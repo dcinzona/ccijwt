@@ -1,5 +1,5 @@
 # CCI JWT Authentication POC
-
+Proof of concept for specifying a username and logging in via CumulusCI without a password (Using JWT)
 ## Setup
 
 This assumes you have a strong understanding of JWT and Connected Apps in Salesforce, created a [connected app](https://developer.salesforce.com/docs/atlas.en-us.232.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_connected_app.htm), and [set up the certificate](https://developer.salesforce.com/docs/atlas.en-us.232.0.sfdx_dev.meta/sfdx_dev/sfdx_dev_auth_key_and_cert.htm) within the app.
