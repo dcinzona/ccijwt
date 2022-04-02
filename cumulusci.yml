@@ -1,0 +1,15 @@
+minimum_cumulusci_version: "3.55.0"
+project:
+    name: ccijwt
+    package:
+        name: ccijwt
+        api_version: "52.0"
+    git:
+        default_branch: "main"
+    source_format: sfdx
+
+tasks:
+    ccijwt:
+        class_path: cumulusci.tasks.command.Command
+        options:
+            command: "./auth.sh -u <username>"
