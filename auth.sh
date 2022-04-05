@@ -50,7 +50,7 @@ Help()
 ConnectSFDX()
 {
     COMMAND="sfdx force:auth:jwt:grant --clientid $_CLIENTID --username $_USERNAME --setalias $_ALIAS \
-    --jwtkeyfile $_KEYPATH "
+    --jwtkeyfile $_KEYPATH"
 
     if [[ $SET_DEFAULT -eq 1 ]];
     then

@@ -3,13 +3,47 @@ project:
     name: ccijwt
     package:
         name: ccijwt
-        api_version: "52.0"
+        api_version: "54.0"
     git:
         default_branch: "main"
     source_format: sfdx
 
 tasks:
-    ccijwt:
+    auth_sh:
         class_path: cumulusci.tasks.command.Command
         options:
             command: "./auth.sh -u <username>"
+    make_cert:
+        class_path: tasks.dcinzona.cert.CreateCert
+        options:
+            hostname: "cci.dev.dcinzona.internal"
+    create_connected_app:
+        class_path: tasks.dcinzona.connectedapp.CreateConnectedApp
+        options:
+            label: "CCI_JWT_POC_App"
+            email: "youremail@example.com.invalid"
+            cert_path: ".jwt/server.crt"
+    connect_sfdx_jwt:
+        class_path: tasks.dcinzona.sfdxauth.ConnectSFDX_JWT
+        options:
+            jwtkey: ".jwt/server.key"
+            loginurl: "https://login.salesforce.com"
+    run_as:
+        class_path: tasks.dcinzona.runas.RunCommand
+        options:
+            command: 'cci task run execute_anon --apex "System.debug(Userinfo.getUserId());" --org {alias}'
+            username: "{_USERNAME}"
+            alias: "ccijwt"
+    list_sfdx_orgs:
+        class_path: tasks.dcinzona.runas.RunCommand
+        options:
+            command: "sfdx force:auth:list && cci org list"
+            username: "{_USERNAME}"
+            alias: "ccijwt"
+flows:
+    test_cci:
+        steps:
+            1:
+                task: run_as
+                options:
+                    username: "cci.dev.dcinzona.internal"

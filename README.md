@@ -29,3 +29,45 @@ Options:
   k     The certificate private key to use for authentication (Default: .jwt/server.key)
   ```
 
+
+## Dev Setup
+
+Use [pyenv](https://github.com/pyenv/pyenv) and pyenv-virtualenv:
+
+1. `brew install pyenv`
+1. `brew install pyenv-virtualenv`
+1. `pyenv install 3.9.12`
+1. `pyenv virtualenv 3.9.12 ccijwt`
+1. `pyenv local ccijwt`
+1. `pyenv rehash`
+1. `pip install -r requirements.txt --upgrade`
+
+## Using CumulusCI Tasks
+
+TBD: Working on setting up cumulusCI tasks to create certificates and connect orgs and authenticate.
+
+### Creating a Self-Signed Certificate
+You can create a self-signed certificate used for JWT auth by running the command: `cci task run make_cert`
+
+  Options
+
+    --hostname HOSTNAME
+      Required
+      The domain for self-signed certificate generation
+      Default: cci.dev.dcinzona.internal
+
+    --dir DIR
+      Optional
+      If provided, the directory where the command should be run from.
+
+    --interactive INTERACTIVE
+      Optional
+      If True, the command will use stderr, stdout, and stdin of the main process.Defaults to False.
+
+### Running CCI as another user:
+
+Use the `run_as` task. This will load the environment variables specified in `.env`
+The `username` flag will default to the username specified in the .env file. Setting the flag overrides that user.
+
+Example:
+```cci task run run_as --alias ccijwt --username <another user>```
