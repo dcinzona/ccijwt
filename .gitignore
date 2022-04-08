@@ -42,3 +42,7 @@ $RECYCLE.BIN/
 jwt
 server.crt
 server.key
+
+
+.pyc
+__pycache__/

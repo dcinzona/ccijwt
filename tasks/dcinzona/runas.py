@@ -61,9 +61,21 @@ class RunCommand(Command):
             json.dumps({"username": self.username, "instance_url": self.instance_url}),
         )
         env = self._get_env()
-        print(json.dumps(env, indent=2))
-        self._connect_sfdx()
-        self._run_command(env)
+        self.logger.info("Environment variables:")
+        self.logger.info(json.dumps(env, indent=2))
+        # self._connect_sfdx()
+        self._run_command(
+            env,
+            command=self.options["command"],
+            output_handler=None,
+            return_code_handler=self.handle_error,
+        )
+
+    def handle_error(self, returncode, stderr):
+        if returncode == 1:
+            self.logger.error(f"Command failed with return code {returncode}")
+            self.logger.error(f"Command failed with stderr {stderr}")
+            self._run_command(self._get_env(), "cci error info")
 
     def _connect_sfdx(self):
         env = self._get_env()
