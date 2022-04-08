@@ -46,3 +46,4 @@ server.key
 
 .pyc
 __pycache__/
+force-app/
